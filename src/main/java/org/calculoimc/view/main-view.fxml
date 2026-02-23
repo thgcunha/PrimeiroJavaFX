@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.calculoimc.controller.HelloController">
+
+    <Label text="Calculadora de IMC" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtNome" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+
+        <Label text="Altura (m):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtAltura" GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Ex: 1.75"/>
+
+        <Label text="Peso (kg):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="txtPeso" GridPane.rowIndex="2" GridPane.columnIndex="1" promptText="Ex: 70.5"/>
+    </GridPane>
+
+    <HBox spacing="10">
+        <Button text="Calcular IMC" onAction="#calcularImc" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Salvar" onAction="#salvar" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+        <Button text="Carregar" onAction="#carregar" style="-fx-background-color: #FF9800; -fx-text-fill: white;"/>
+    </HBox>
+
+    <Label fx:id="lblResultado" style="-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+
+    <TableView fx:id="tableView" prefHeight="250">
+        <columns>
+            <TableColumn fx:id="colNome" text="Nome" prefWidth="120"/>
+            <TableColumn fx:id="colAltura" text="Altura (m)" prefWidth="90"/>
+            <TableColumn fx:id="colPeso" text="Peso (kg)" prefWidth="90"/>
+            <TableColumn fx:id="colImc" text="IMC" prefWidth="80"/>
+            <TableColumn fx:id="colClassificacao" text="Classificação" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+</VBox>
+
