@@ -33,11 +33,11 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return nome + ";" + altura + ";" + peso + ";" + imc + ";" + classificacao;
+        return nome + "," + altura + "," + peso + "," + imc + "," + classificacao;
     }
 
     public static Pessoa fromString(String linha) {
-        String[] p = linha.split(";");
+        String[] p = linha.split(",");
         return new Pessoa(p[0], Double.parseDouble(p[1]), Double.parseDouble(p[2]));
     }
 }

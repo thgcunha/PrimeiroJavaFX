@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.calculoimc.model.Pessoa;
+import org.calculoimc.utils.ArquivoUtil;
 
 import java.io.*;
 
@@ -42,7 +43,16 @@ public class HelloController {
             double altura = Double.parseDouble(txtAltura.getText().trim());
             double peso = Double.parseDouble(txtPeso.getText().trim());
 
-            if (nome.isEmpty()) { lblResultado.setText("Informe o nome!"); return; }
+            if (nome.isEmpty()) {
+                lblResultado.setText("Informe o nome!");
+                return;
+            }
+
+            // ADICIONAR ESTA VALIDAÇÃO:
+            if (altura <= 0 || peso <= 0) {
+                lblResultado.setText("Altura e peso devem ser maiores que zero!");
+                return;
+            }
 
             Pessoa p = new Pessoa(nome, altura, peso);
             lblResultado.setText(String.format("IMC: %.2f - %s", p.getImc(), p.getClassificacao()));
@@ -55,8 +65,8 @@ public class HelloController {
 
     @FXML
     public void salvar() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARQUIVO))) {
-            for (Pessoa p : listaPessoas) { bw.write(p.toString()); bw.newLine(); }
+        try {
+            ArquivoUtil.salvar(listaPessoas);
             lblResultado.setText("Dados salvos com sucesso!");
         } catch (IOException e) {
             lblResultado.setText("Erro ao salvar: " + e.getMessage());
@@ -65,13 +75,9 @@ public class HelloController {
 
     @FXML
     public void carregar() {
-        File arquivo = new File(ARQUIVO);
-        if (!arquivo.exists()) { lblResultado.setText("Arquivo não encontrado!"); return; }
-
-        listaPessoas.clear();
-        try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-            String linha;
-            while ((linha = br.readLine()) != null) listaPessoas.add(Pessoa.fromString(linha));
+        try {
+            listaPessoas.clear();
+            listaPessoas.addAll(ArquivoUtil.carregar());
             lblResultado.setText("Carregados: " + listaPessoas.size() + " pessoa(s)");
         } catch (IOException e) {
             lblResultado.setText("Erro ao carregar: " + e.getMessage());
